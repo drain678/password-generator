@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ru">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Генератор паролей (WASM + C++)</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <main class="container">
+        <h1>Генератор паролей</h1>
+
+        <div class="controls">
+            <label>Длина: <input id="len" type="number" min="4" max="128" value="16"></label>
+
+            <label><input id="upper" type="checkbox" checked> Заглавные</label>
+            <label><input id="lower" type="checkbox" checked> Строчные</label>
+            <label><input id="digits" type="checkbox" checked> Цифры</label>
+            <label><input id="symbols" type="checkbox"> Символы</label>
+
+            <button id="gen">Генерировать</button>
+        </div>
+
+        <div class="result">
+            <textarea id="output" readonly></textarea>
+            <div class="actions">
+                <button id="copy">Копировать</button>
+                <div id="strength" class="strength">—</div>
+            </div>
+        </div>
+
+    </main>
+
+    <script src="../dist/generator.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
