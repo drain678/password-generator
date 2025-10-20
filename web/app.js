@@ -1,16 +1,12 @@
-// app.js — ожидает, что dist/generator.js уже подгружен и Module готов
-// Функции из C++: generate_password -> возвращает pointer (number), free_str(pointer)
 
 let generate_c = null;
 let free_c = null;
 
 function initWasm() {
-    // cwrap/ccall доступны после загрузки Module
     if (typeof Module === 'undefined') {
         console.error('Module не найден. Убедитесь, что dist/generator.js подключён.');
         return;
     }
-    // cwrap возвращает JS-обёртку
     generate_c = Module.cwrap('generate_password', 'number', ['number', 'number', 'number', 'number', 'number']);
     free_c = Module.cwrap('free_str', 'void', ['number']);
 }
@@ -41,7 +37,6 @@ function generate() {
     const digits = getEl('digits').checked ? 1 : 0;
     const symbols = getEl('symbols').checked ? 1 : 0;
 
-    // вызов C++: возвращает указатель на C-строку (char*)
     const ptr = generate_c(len, upper, lower, digits, symbols);
     const jsstr = Module.UTF8ToString(ptr);
     free_c(ptr);
@@ -66,8 +61,6 @@ function copyOutput() {
     }).catch(() => alert('Не удалось скопировать'));
 }
 
-// Инициализация: Module может ещё загружаться асинхронно.
-// Emscripten генерирует загружаемый скрипт, который вызывает onRuntimeInitialized.
 if (typeof Module !== 'undefined') {
     const oldInit = Module.onRuntimeInitialized;
     Module.onRuntimeInitialized = function () {
@@ -75,7 +68,6 @@ if (typeof Module !== 'undefined') {
         initWasm();
     };
 } else {
-    // в редких случаях Module может быть undefined пока скрипт подключается
     window.addEventListener('load', initWasm);
 }
 
