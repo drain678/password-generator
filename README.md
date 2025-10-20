@@ -10,11 +10,7 @@
 
 ## Сборка
 
-1. Перейти в корень проекта:
-```bash
-cd password-generator-wasm
-```
-2. Собрать WASM:
+1. Собрать WASM из корня проекта:
 ```
 emcc src/generator.cpp \
   -o dist/generator.js \
@@ -23,11 +19,11 @@ emcc src/generator.cpp \
   -s EXPORTED_RUNTIME_METHODS='["cwrap","UTF8ToString"]' \
   -O3
 ```
-3. Запустить локальный сервер:
+2. Запустить локальный сервер:
 ```
 python3 -m http.server 8080
 ```
-4. Открыть в браузере:
+3. Открыть в браузере:
 ```
 http://localhost:8080/web/index.html
 ```
